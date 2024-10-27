@@ -11,8 +11,7 @@
     <script>
         async function fetchWeather() {
             try {
-                const response = await fetch('https://neu-rsgp-digtx-study-design-api-mgr.azure-api.net/api/WeatherForecast
-');
+                const response = await fetch('https://neu-rsgp-digtx-study-design-api-mgr.azure-api.net/api/WeatherForecast');
                 if (response.ok) {
                     const data = await response.json();
                     document.getElementById('forecast').innerText = JSON.stringify(data, null, 2);
