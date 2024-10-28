@@ -7,50 +7,23 @@
 </head>
 <body>
     <h1>Weather Forecast</h1>
-    <button onclick="fetchWeather()">Get Weather Forecast</button>
-    <div id="results"></div>
-
+    <h2>https://neu-rsgp-digtx-study-design-api-mgr.azure-api.net/api/WeatherForecast</h2>
+    <div id="forecast"></div>
     <script>
         async function fetchWeather() {
-            const apiUrl = 'https://neu-rsgp-digtx-study-design-api-mgr.azure-api.net/api/WeatherForecast';
-            
-            document.getElementById('results').innerHTML = 'Loading...';
-
             try {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status} ${response.statusText}`);
+                const response = await fetch('https://neu-rsgp-digtx-study-design-api-mgr.azure-api.net/api/WeatherForecast');
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('forecast').innerText = JSON.stringify(data, null, 2);
+                } else {
+                    document.getElementById('forecast').innerText = 'Error fetching data';
                 }
-
-                const data = await response.json();
-                displayResults(data);
-
             } catch (error) {
-                document.getElementById('results').innerHTML = `Failed to fetch data: ${error.message}`;
+                document.getElementById('forecast').innerText = 'Error: ' + error.message;
             }
         }
-
-        function displayResults(data) {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '';
-
-            data.forEach((forecast, index) => {
-                const forecastDiv = document.createElement('div');
-                forecastDiv.innerHTML = `
-                    <h3>Forecast ${index + 1}</h3>
-                    <p>Date: ${forecast.date}</p>
-                    <p>Temperature: ${forecast.temperatureC}°C / ${forecast.temperatureF}°F</p>
-                    <p>Summary: ${forecast.summary}</p>
-                `;
-                resultsDiv.appendChild(forecastDiv);
-            });
-        }
+        fetchWeather();
     </script>
 </body>
 </html>
