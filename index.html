@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clarity Tracking Demo-cool</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clarity Tracking Demo</title>
 
   <!-- Microsoft Clarity Tracking Script -->
   <script type="text/javascript">
@@ -11,22 +11,43 @@
       c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
       t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
       y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+      console.log("Clarity script loaded.");
     })(window, document, "clarity", "script", "sd4xmgwgmf");
   </script>
 </head>
 <body>
-  <h1>Welcome to Clarity Demo-TEST</h1>
-  <form>
-    <label for="name">Name1:</label><br />
-    <input type="text" id="name" name="name"><br /><br />
+  <h1>Welcome to Clarity Demo</h1>
+
+  <form id="feedbackForm">
+    <label for="name">Name:</label><br />
+    <input type="text" id="name" name="name" /><br /><br />
 
     <label for="email">Email:</label><br />
-    <input type="email" id="email" name="email"><br /><br />
+    <input type="email" id="email" name="email" /><br /><br />
 
     <label for="feedback">Feedback:</label><br />
     <textarea id="feedback" name="feedback"></textarea><br /><br />
 
     <button type="submit">Submit</button>
   </form>
+
+  <script>
+    // Optional: Track form submit event as a custom event in Clarity
+    document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // prevent actual form submission for demo
+      
+      if (typeof clarity === 'function') {
+        clarity('event', 'formSubmitted', {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value
+        });
+        console.log('Clarity formSubmitted event sent');
+      } else {
+        console.log('Clarity not loaded yet');
+      }
+      
+      alert('Form submitted! Check Clarity dashboard after a few minutes.');
+    });
+  </script>
 </body>
 </html>
